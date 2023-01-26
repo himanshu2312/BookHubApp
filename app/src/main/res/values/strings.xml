@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">BookHub</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="about_app">About App</string>
+    <string name="profile">Profile</string>
+    <string name="favorite">Favorite</string>
+    <string name="txt_drawer_header">Navigation Menu</string>
+    <string name="des_book_app_icon">icon of book</string>
+    <string name="open_drawer"></string>
+    <string name="close_drawer"></string>
+</resources>

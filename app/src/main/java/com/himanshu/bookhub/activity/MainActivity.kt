@@ -1,4 +1,4 @@
-package com.himanshu.bookhub
+package com.himanshu.bookhub.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -6,6 +6,11 @@ import android.view.MenuItem
 import android.widget.FrameLayout
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
+import com.himanshu.bookhub.R
+import com.himanshu.bookhub.fragment.AboutAppFragment
+import com.himanshu.bookhub.fragment.DashboardFragment
+import com.himanshu.bookhub.fragment.FavoriteFragment
+import com.himanshu.bookhub.fragment.ProfileFragment
 
 @Suppress("DEPRECATION")
 class MainActivity : AppCompatActivity() {
@@ -65,7 +70,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun openDashboard(){
-        val fragment=DashboardFragment()
+        val fragment= DashboardFragment()
         val transaction=supportFragmentManager.beginTransaction()
         transaction.replace(R.id.frameLayout,fragment)
         transaction.commit()
@@ -75,7 +80,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun openProfile(){
-        val fragment=ProfileFragment()
+        val fragment= ProfileFragment()
         val transaction=supportFragmentManager.beginTransaction()
         transaction.replace(R.id.frameLayout,fragment)
         transaction.commit()
@@ -84,7 +89,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun openAboutApp(){
-        val fragment=AboutAppFragment()
+        val fragment= AboutAppFragment()
         val transaction=supportFragmentManager.beginTransaction()
         transaction.replace(R.id.frameLayout,fragment)
         transaction.commit()
@@ -93,7 +98,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun openFavorite(){
-        val fragment=FavoriteFragment()
+        val fragment= FavoriteFragment()
         val transaction=supportFragmentManager.beginTransaction()
         transaction.replace(R.id.frameLayout,fragment)
         transaction.commit()

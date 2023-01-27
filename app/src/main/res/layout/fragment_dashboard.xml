@@ -3,15 +3,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DashboardFragment">
+    tools:context=".fragment.DashboardFragment">
 
-    <TextView
+   <!-- <TextView
+        android:id="@+id/txtDashboard"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
         android:text="@string/dashboard"
-        android:textSize="20sp"
         android:textColor="@color/teal_700"
-        android:layout_margin="20dp"
-        android:layout_centerHorizontal="true"/>
+        android:textSize="20sp" />-->
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerDashboard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp" />
 
 </RelativeLayout>

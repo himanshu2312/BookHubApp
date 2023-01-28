@@ -1,23 +1,27 @@
 package com.himanshu.bookhub.fragment
 
+import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.himanshu.bookhub.R
 import com.himanshu.bookhub.adapter.DashboardRecyclerAdapter
 import com.himanshu.bookhub.model.Book
+import com.himanshu.bookhub.util.ConnectionManager
 
 
 class DashboardFragment : Fragment() {
     private lateinit var recyclerDashboard: RecyclerView
     private lateinit var layoutManager: RecyclerView.LayoutManager
     private lateinit var recyclerAdapter: DashboardRecyclerAdapter
+    private lateinit var btnCheckConnection: Button
     private var bookInfoList= arrayListOf(
         Book("P.S. I love You", "Cecelia Ahern", "Rs. 299", "4.5", R.drawable.ps_ily),
         Book("The Great Gatsby", "F. Scott Fitzgerald", "Rs. 399", "4.1", R.drawable.great_gatsby),
@@ -38,6 +42,7 @@ class DashboardFragment : Fragment() {
     ): View? {
         val view=inflater.inflate(R.layout.fragment_dashboard, container, false)
 
+        btnCheckConnection=view.findViewById(R.id.btnCheckConnection)
         recyclerDashboard=view.findViewById(R.id.recyclerDashboard)
         layoutManager= LinearLayoutManager(activity)
         recyclerAdapter= DashboardRecyclerAdapter(activity as Context,bookInfoList)
@@ -46,6 +51,35 @@ class DashboardFragment : Fragment() {
         recyclerDashboard.layoutManager= layoutManager
         val dividerItemDecoration=DividerItemDecoration(recyclerDashboard.context,(layoutManager as LinearLayoutManager).orientation)
         recyclerDashboard.addItemDecoration(dividerItemDecoration)
+
+        btnCheckConnection.setOnClickListener{
+            if (ConnectionManager().checkConnectivity(activity as Context)){
+                val dialog = AlertDialog.Builder(activity as Context)
+                dialog.setTitle("Success")
+                dialog.setMessage("Internet Connection found")
+                dialog.setPositiveButton("Ok"){
+                        text, listener ->
+                }
+                dialog.setNegativeButton("Cancel"){
+                    text,listener->
+                }
+                dialog.create()
+                dialog.show()
+            }
+            else{
+                val dialog = AlertDialog.Builder(activity as Context)
+                dialog.setTitle("Error")
+                dialog.setMessage("Internet Connection is not found")
+                dialog.setPositiveButton("Ok"){
+                        text, listener ->
+                }
+                dialog.setNegativeButton("Cancel"){
+                        text,listener->
+                }
+                dialog.create()
+                dialog.show()
+            }
+        }
 
         return view
     }

@@ -6,11 +6,12 @@
     <string name="favorite">Favorite</string>
     <string name="txt_drawer_header">Navigation Menu</string>
     <string name="des_book_app_icon">icon of book</string>
-    <string name="open_drawer"></string>
-    <string name="close_drawer"></string>
+    <string name="open_drawer">Drawer Opened</string>
+    <string name="close_drawer">Drawer Closed</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="txt_home_screen">Home Screen</string>
     <string name="des_tony_stark_image">image of tony stark</string>
     <string name="des_ic_launcher_icon">image of book</string>
+    <string name="btn_check_connection">Check connection</string>
 </resources>

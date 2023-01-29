@@ -9,7 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/about_app"
-        android:textColor="@color/teal_700"
+        android:textColor="@color/colorAccent"
         android:textSize="20sp"
         android:layout_margin="20dp"
         android:layout_centerHorizontal="true"

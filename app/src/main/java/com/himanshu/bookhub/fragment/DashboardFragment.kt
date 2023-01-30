@@ -47,15 +47,17 @@ class DashboardFragment : Fragment() {
         if (ConnectionManager().checkConnectivity(activity as Context)) {
             val queue = Volley.newRequestQueue(activity as Context)
             val url = "http://13.235.250.119/v1/book/fetch_books/"
-            val jsonObjectRequest = object : JsonObjectRequest(Method.GET, url, null,
+            val jsonObjectRequest = object : JsonObjectRequest(
+                Method.GET, url, null,
                 Response.Listener {
+                    println("Response is $it")
                     try {
-                        progressBarLayout.visibility = View.GONE
                         val success = it.getBoolean("success")
                         if (success) {
-                            val data = it.getJSONObject("data")
+                            val data = it.getJSONArray("data")
+                            progressBarLayout.visibility = View.GONE
                             for (i in 0 until data.length()) {
-                                val bookJsonObject = data.getJSONObject(i.toString())
+                                val bookJsonObject = data.getJSONObject(i)
                                 val book = Book(
                                     bookJsonObject.getString("book_id"),
                                     bookJsonObject.getString("name"),
@@ -88,6 +90,7 @@ class DashboardFragment : Fragment() {
                     }
                 },
                 Response.ErrorListener {
+                    println("Error is $it")
                     Toast.makeText(
                         activity as Context,
                         "Volley error occurred!!",
@@ -96,7 +99,7 @@ class DashboardFragment : Fragment() {
                 }) {
                 override fun getHeaders(): MutableMap<String, String> {
                     val headers = HashMap<String, String>()
-                    headers["Context-type"] = "application/json"
+                    headers["Content-Type"] = "application/json"
                     headers["token"] = "56e490debc1169"
                     return headers
                 }
@@ -108,7 +111,7 @@ class DashboardFragment : Fragment() {
             dialog.setTitle("Error")
             dialog.setMessage("Internet Connection is not found")
             dialog.setPositiveButton("Open Settings") { text, listener ->
-                val intent = Intent(Settings.ACTION_NETWORK_OPERATOR_SETTINGS)
+                val intent = Intent(Settings.ACTION_WIRELESS_SETTINGS)
                 startActivity(intent)
                 activity?.finish()
             }

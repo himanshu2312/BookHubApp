@@ -54,8 +54,8 @@ class DashboardFragment : Fragment() {
                     try {
                         val success = it.getBoolean("success")
                         if (success) {
-                            val data = it.getJSONArray("data")
                             progressBarLayout.visibility = View.GONE
+                            val data = it.getJSONArray("data")
                             for (i in 0 until data.length()) {
                                 val bookJsonObject = data.getJSONObject(i)
                                 val book = Book(

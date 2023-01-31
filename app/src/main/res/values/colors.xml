@@ -10,4 +10,6 @@
     <color name="colorPrimary">#EE6C00</color>
     <color name="colorPrimaryDark">#C23E10</color>
     <color name="colorAccent">#D81B60</color>
+    <color name="ratingGolden">#ffca28</color>
+    <color name="dollarGreen">#357a38</color>
 </resources>

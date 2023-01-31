@@ -14,4 +14,6 @@
     <string name="des_tony_stark_image">image of tony stark</string>
     <string name="des_ic_launcher_icon">image of book</string>
     <string name="btn_check_connection">Check connection</string>
+    <string name="book_des_heading">About the Book:</string>
+    <string name="btn_add_to_fav">add to favorites</string>
 </resources>

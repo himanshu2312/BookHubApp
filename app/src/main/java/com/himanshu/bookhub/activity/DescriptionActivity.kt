@@ -1,7 +1,11 @@
+@file:Suppress("DEPRECATION")
+
 package com.himanshu.bookhub.activity
 
 import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
+import android.os.AsyncTask
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
@@ -13,15 +17,20 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.room.Room
 import com.android.volley.Response
 import com.android.volley.toolbox.Volley
 import com.himanshu.bookhub.R
 import org.json.JSONObject
 import com.android.volley.toolbox.JsonObjectRequest
+import com.himanshu.bookhub.database.BookDatabase
+import com.himanshu.bookhub.database.BookEntity
 import com.himanshu.bookhub.util.ConnectionManager
 import com.squareup.picasso.Picasso
 import org.json.JSONException
 
+@Suppress("DEPRECATION")
 class DescriptionActivity : AppCompatActivity() {
     private lateinit var toolbar: androidx.appcompat.widget.Toolbar
     private lateinit var txtBookName: TextView
@@ -54,7 +63,7 @@ class DescriptionActivity : AppCompatActivity() {
         progressBarLayout = findViewById(R.id.progressBarLayout)
         progressBarLayout.visibility = View.VISIBLE
 
-        booId=intent.getStringExtra("book_id")
+        booId = intent.getStringExtra("book_id")
         if (booId == null) {
             Toast.makeText(
                 this@DescriptionActivity,
@@ -83,6 +92,55 @@ class DescriptionActivity : AppCompatActivity() {
                                 Picasso.get().load(bookData.getString("image"))
                                     .error(R.drawable.default_book_cover).into(imgBookImage)
                                 progressBarLayout.visibility = View.GONE
+
+                                val bookEntity = BookEntity(
+                                    booId?.toInt() as Int,
+                                    bookData.getString("name"),
+                                    bookData.getString("author"),
+                                    bookData.getString("price"),
+                                    bookData.getString("rating"),
+                                    bookData.getString("image"),
+                                    bookData.getString("description")
+                                )
+                                if (PerformOnEntity(applicationContext, bookEntity,1).execute().get()){
+                                    switchButtonText()
+                                }
+                                btnAddToFav.setOnClickListener {
+                                    if (!PerformOnEntity(applicationContext, bookEntity,1).execute().get()) {
+                                        try {
+                                            PerformOnEntity(applicationContext, bookEntity,2).execute()
+                                            Toast.makeText(
+                                                this@DescriptionActivity,
+                                                "Book added to Favorites",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+                                            switchButtonText()
+                                        } catch (e: java.lang.Error) {
+                                            Toast.makeText(
+                                                this@DescriptionActivity,
+                                                "Error : $e",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+                                        }
+                                    } else {
+                                        try {
+                                            PerformOnEntity(applicationContext, bookEntity,3).execute()
+                                            Toast.makeText(
+                                                this@DescriptionActivity,
+                                                "Book removed from Favorites",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+                                            switchButtonText()
+                                        } catch (e: java.lang.Error) {
+                                            Toast.makeText(
+                                                this@DescriptionActivity,
+                                                "Error : $e",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+                                        }
+                                    }
+                                }
+
                             } else {
                                 Toast.makeText(
                                     this@DescriptionActivity,
@@ -132,5 +190,48 @@ class DescriptionActivity : AppCompatActivity() {
 
         }
 
+    }
+
+    fun switchButtonText() {
+        if (btnAddToFav.text == getString(R.string.btn_add_to_fav)) {
+            btnAddToFav.text = getString(R.string.btn_remove_from_fav)
+            val btnColor = ContextCompat.getColor(applicationContext, R.color.favorite)
+            btnAddToFav.setBackgroundColor(btnColor)
+        } else {
+            btnAddToFav.text = getString(R.string.btn_add_to_fav)
+            val btnColor = ContextCompat.getColor(applicationContext, R.color.colorPrimary)
+            btnAddToFav.setBackgroundColor(btnColor)
+        }
+    }
+
+    class PerformOnEntity(context: Context, private val bookEntity: BookEntity, private val operation:Int):
+        AsyncTask<Void, Void, Boolean>() {
+        private val db = Room.databaseBuilder(context, BookDatabase::class.java, "favBook_db").build()
+
+        @Deprecated("Deprecated in Java")
+        override fun doInBackground(vararg p0: Void?): Boolean {
+
+            when(operation){
+                1-> {
+                    val book: BookEntity? =
+                        db.bookDao().getFavBookById(bookEntity.bookId.toString())
+                    db.close()
+                    return book!=null
+                }
+
+                2 -> {
+                    db.bookDao().insertBook(bookEntity)
+                    db.close()
+                    return true
+                }
+
+                3 -> {
+                    db.bookDao().deleteBook(bookEntity)
+                    db.close()
+                    return true
+                }
+            }
+            return true
+        }
     }
 }

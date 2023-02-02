@@ -26,7 +26,7 @@ class DashboardRecyclerAdapter(private val context: Context,private val bookList
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DashboardViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.recycler_books_single_row,parent,false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.recycler_dashboard_single_row,parent,false)
 
         return DashboardViewHolder(view)
     }

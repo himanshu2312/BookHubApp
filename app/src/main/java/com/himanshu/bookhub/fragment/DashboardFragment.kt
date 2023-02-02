@@ -6,10 +6,8 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.provider.Settings
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.RelativeLayout
 import android.widget.Toast
@@ -43,6 +41,7 @@ class DashboardFragment : Fragment() {
         progressBar = view.findViewById(R.id.progressBar)
         progressBarLayout = view.findViewById(R.id.rlProgressBar)
         progressBarLayout.visibility = View.VISIBLE
+        setHasOptionsMenu(true)
 
         if (ConnectionManager().checkConnectivity(activity as Context)) {
             val queue = Volley.newRequestQueue(activity as Context)
@@ -68,34 +67,37 @@ class DashboardFragment : Fragment() {
                                 )
                                 bookInfoList.add(book)
                             }
-                            layoutManager = LinearLayoutManager(activity)
+                            layoutManager = LinearLayoutManager(activity as Context)
                             recyclerAdapter =
                                 DashboardRecyclerAdapter(activity as Context, bookInfoList)
 
                             recyclerDashboard.adapter = recyclerAdapter
                             recyclerDashboard.layoutManager = layoutManager
                         } else {
+                            if (activity!=null){
                             Toast.makeText(
                                 activity as Context,
                                 "Not able to fetch books",
                                 Toast.LENGTH_SHORT
-                            ).show()
+                            ).show()}
                         }
                     } catch (e: JSONException) {
+                        if (activity!=null){
                         Toast.makeText(
                             activity as Context,
                             "Some unexpected error occurred!!",
                             Toast.LENGTH_SHORT
-                        ).show()
+                        ).show()}
                     }
                 },
                 Response.ErrorListener {
+                    if (activity!=null){
                     println("Error is $it")
                     Toast.makeText(
                         activity as Context,
                         "Volley error occurred!!",
                         Toast.LENGTH_SHORT
-                    ).show()
+                    ).show()}
                 }) {
                 override fun getHeaders(): MutableMap<String, String> {
                     val headers = HashMap<String, String>()
@@ -123,6 +125,11 @@ class DashboardFragment : Fragment() {
         }
 
         return view
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_dashboard,menu)
+
     }
 
 }

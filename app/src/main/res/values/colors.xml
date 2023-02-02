@@ -13,4 +13,5 @@
     <color name="ratingGolden">#ffca28</color>
     <color name="dollarGreen">#357a38</color>
     <color name="favorite">#311b92</color>
+    <color name="lightGrey">#f5f5f5</color>
 </resources>

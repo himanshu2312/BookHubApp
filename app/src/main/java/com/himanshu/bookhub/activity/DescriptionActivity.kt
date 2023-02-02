@@ -3,9 +3,7 @@
 package com.himanshu.bookhub.activity
 
 import android.app.AlertDialog
-import android.content.Context
 import android.content.Intent
-import android.os.AsyncTask
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
@@ -18,17 +16,19 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.room.Room
 import com.android.volley.Response
 import com.android.volley.toolbox.Volley
 import com.himanshu.bookhub.R
 import org.json.JSONObject
 import com.android.volley.toolbox.JsonObjectRequest
-import com.himanshu.bookhub.database.BookDatabase
 import com.himanshu.bookhub.database.BookEntity
 import com.himanshu.bookhub.util.ConnectionManager
 import com.squareup.picasso.Picasso
 import org.json.JSONException
+import android.content.Context
+import android.os.AsyncTask
+import androidx.room.Room
+import com.himanshu.bookhub.database.BookDatabase
 
 @Suppress("DEPRECATION")
 class DescriptionActivity : AppCompatActivity() {
@@ -107,34 +107,32 @@ class DescriptionActivity : AppCompatActivity() {
                                 }
                                 btnAddToFav.setOnClickListener {
                                     if (!PerformOnEntity(applicationContext, bookEntity,1).execute().get()) {
-                                        try {
-                                            PerformOnEntity(applicationContext, bookEntity,2).execute()
+                                        if (PerformOnEntity(applicationContext,bookEntity,2).execute().get()) {
                                             Toast.makeText(
                                                 this@DescriptionActivity,
                                                 "Book added to Favorites",
                                                 Toast.LENGTH_SHORT
                                             ).show()
                                             switchButtonText()
-                                        } catch (e: java.lang.Error) {
+                                        } else{
                                             Toast.makeText(
                                                 this@DescriptionActivity,
-                                                "Error : $e",
+                                                "some error occurred",
                                                 Toast.LENGTH_SHORT
                                             ).show()
                                         }
                                     } else {
-                                        try {
-                                            PerformOnEntity(applicationContext, bookEntity,3).execute()
+                                        if (PerformOnEntity(applicationContext, bookEntity,3).execute().get()) {
                                             Toast.makeText(
                                                 this@DescriptionActivity,
                                                 "Book removed from Favorites",
                                                 Toast.LENGTH_SHORT
                                             ).show()
                                             switchButtonText()
-                                        } catch (e: java.lang.Error) {
+                                        }else {
                                             Toast.makeText(
                                                 this@DescriptionActivity,
-                                                "Error : $e",
+                                                "some error occurred",
                                                 Toast.LENGTH_SHORT
                                             ).show()
                                         }
@@ -204,6 +202,7 @@ class DescriptionActivity : AppCompatActivity() {
         }
     }
 
+    @Suppress("DEPRECATION")
     class PerformOnEntity(context: Context, private val bookEntity: BookEntity, private val operation:Int):
         AsyncTask<Void, Void, Boolean>() {
         private val db = Room.databaseBuilder(context, BookDatabase::class.java, "favBook_db").build()
@@ -213,8 +212,7 @@ class DescriptionActivity : AppCompatActivity() {
 
             when(operation){
                 1-> {
-                    val book: BookEntity? =
-                        db.bookDao().getFavBookById(bookEntity.bookId.toString())
+                    val book: BookEntity? = db.bookDao().getFavBookById(bookEntity.book_id.toString())
                     db.close()
                     return book!=null
                 }
@@ -231,7 +229,8 @@ class DescriptionActivity : AppCompatActivity() {
                     return true
                 }
             }
-            return true
+            return false
         }
     }
+
 }

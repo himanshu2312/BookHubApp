@@ -13,9 +13,9 @@ interface BookDao {
     @Delete
     fun deleteBook(bookEntity: BookEntity)
 
-    @Query("SELECT * FROM favBook")
+    @Query(value = "SELECT * FROM favBook")
     fun getFavBooks(): List<BookEntity>
 
-    @Query("SELECT * FROM favBook WHERE book_id = :bookId")
+    @Query(value = "SELECT * FROM favBook WHERE book_id = :bookId")
     fun getFavBookById(bookId: String): BookEntity
 }

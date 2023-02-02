@@ -17,4 +17,5 @@
     <string name="book_des_heading">About the Book:</string>
     <string name="btn_add_to_fav">add to favorites</string>
     <string name="btn_remove_from_fav">Remove from favorites</string>
+    <string name="sort">Sort</string>
 </resources>

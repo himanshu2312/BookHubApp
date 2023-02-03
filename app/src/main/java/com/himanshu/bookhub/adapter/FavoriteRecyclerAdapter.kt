@@ -40,7 +40,7 @@ class FavoriteRecyclerAdapter(val context: Context,private val bookList: List<Bo
 
         holder.linearLayout.setOnClickListener {
             val intent=Intent(context,DescriptionActivity::class.java)
-            intent.putExtra("book_id",book.book_id)
+            intent.putExtra("book_id",book.book_id.toString())
             context.startActivity(intent)
         }
 

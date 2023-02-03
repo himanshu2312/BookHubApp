@@ -30,7 +30,7 @@
                 android:id="@+id/llContent"
                 android:layout_width="match_parent"
                 android:layout_height="140dp"
-                android:background="@color/white"
+                android:background="?colorOnPrimary"
                 android:orientation="horizontal"
                 android:weightSum="6">
 
@@ -42,6 +42,7 @@
                     android:contentDescription="@string/des_ic_launcher_icon"
                     android:padding="5dp"
                     android:scaleType="centerCrop"
+                    android:background="@color/lightGrey"
                     android:src="@mipmap/ic_launcher" />
 
                 <RelativeLayout
@@ -55,7 +56,7 @@
                         android:layout_height="wrap_content"
                         android:padding="8dp"
                         android:text="Name of the book"
-                        android:textColor="#000000"
+                        android:textColor="?colorOnSecondary"
                         android:textSize="18sp"
                         android:textStyle="bold" />
 
@@ -66,7 +67,7 @@
                         android:layout_below="@+id/txtBookName"
                         android:padding="8dp"
                         android:text="Name of the Author"
-                        android:textColor="@color/black"
+                        android:textColor="?colorOnSecondary"
                         android:textSize="15sp" />
 
                     <TextView
@@ -87,7 +88,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1.2"
-                    android:drawableLeft="@drawable/ic_ratings"
+                    android:drawableLeft="@drawable/ic_rating"
                     android:drawablePadding="4dp"
                     android:padding="4dp"
                     android:text="4.5"
@@ -120,7 +121,7 @@
                     android:layout_below="@id/txtDescriptionHeading"
                     android:padding="6dp"
                     android:text="@string/hello_blank_fragment"
-                    android:textColor="@color/black"
+                    android:textColor="?colorOnSecondary"
                     android:textSize="18sp" />
             </RelativeLayout>
 

@@ -2,14 +2,15 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="140dp"
-    android:background="#ffffff"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="10dp"
+    android:background="?colorOnPrimary"
     android:layout_margin="6dp">
 
     <LinearLayout
         android:id="@+id/llContent"
         android:layout_width="match_parent"
         android:layout_height="140dp"
-        android:background="#ffffff"
         android:orientation="horizontal"
         android:weightSum="6">
 
@@ -21,6 +22,7 @@
             android:layout_weight="1.5"
             android:contentDescription="@string/des_ic_launcher_icon"
             android:padding="5dp"
+            android:background="@color/lightGrey"
             android:scaleType="centerCrop"
             android:src="@mipmap/ic_launcher" />
 
@@ -37,7 +39,7 @@
                 android:padding="8dp"
                 android:textStyle="bold"
                 android:text="Name of the book"
-                android:textColor="#000000"
+                android:textColor="?colorOnSecondary"
                 android:textSize="18sp" />
 
             <TextView
@@ -46,7 +48,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/txtBookName"
                 android:padding="8dp"
-                android:textColor="@color/black"
+                android:textColor="?colorOnSecondary"
                 android:text="Name of the Author"
                 android:textSize="15sp" />
 
@@ -66,13 +68,13 @@
             android:id="@+id/txtBookRating"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1.2"
             android:layout_gravity="center_vertical"
-            android:padding="4dp"
+            android:layout_weight="1.2"
+            android:drawableLeft="@drawable/ic_rating"
             android:drawablePadding="4dp"
+            android:padding="4dp"
             android:text="4.5"
             android:textColor="@color/ratingGolden"
-            android:drawableLeft="@drawable/ic_ratings"
             android:textSize="18sp"
             android:textStyle="bold" />
 

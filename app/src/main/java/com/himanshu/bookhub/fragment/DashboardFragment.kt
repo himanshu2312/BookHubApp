@@ -1,5 +1,6 @@
 package com.himanshu.bookhub.fragment
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
@@ -22,6 +23,7 @@ import com.himanshu.bookhub.adapter.DashboardRecyclerAdapter
 import com.himanshu.bookhub.model.Book
 import com.himanshu.bookhub.util.ConnectionManager
 import org.json.JSONException
+import java.util.Collections
 
 
 class DashboardFragment : Fragment() {
@@ -31,6 +33,13 @@ class DashboardFragment : Fragment() {
     private lateinit var progressBar: ProgressBar
     private lateinit var progressBarLayout: RelativeLayout
     private var bookInfoList = arrayListOf<Book>()
+    private var ratingComparator= Comparator<Book>{
+        book1,book2 ->
+        if (book1.bookRating.compareTo(book2.bookRating,true)==0){
+            book1.bookName.compareTo(book2.bookName,true)
+        }
+        else book1.bookRating.compareTo(book2.bookRating,true)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,7 +58,6 @@ class DashboardFragment : Fragment() {
             val jsonObjectRequest = object : JsonObjectRequest(
                 Method.GET, url, null,
                 Response.Listener {
-                    println("Response is $it")
                     try {
                         val success = it.getBoolean("success")
                         if (success) {
@@ -92,7 +100,6 @@ class DashboardFragment : Fragment() {
                 },
                 Response.ErrorListener {
                     if (activity!=null){
-                    println("Error is $it")
                     Toast.makeText(
                         activity as Context,
                         "Volley error occurred!!",
@@ -127,9 +134,18 @@ class DashboardFragment : Fragment() {
         return view
     }
 
+    @SuppressLint("NotifyDataSetChanged")
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId==R.id.sort){
+            Collections.sort(bookInfoList,ratingComparator)
+            bookInfoList.reverse()
+        }
+        recyclerAdapter.notifyDataSetChanged()
+        return super.onOptionsItemSelected(item)
+    }
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_dashboard,menu)
-
     }
 
 }

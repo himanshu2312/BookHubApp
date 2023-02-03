@@ -29,6 +29,7 @@ import android.content.Context
 import android.os.AsyncTask
 import androidx.room.Room
 import com.himanshu.bookhub.database.BookDatabase
+import com.himanshu.bookhub.fragment.FavoriteFragment
 
 @Suppress("DEPRECATION")
 class DescriptionActivity : AppCompatActivity() {
